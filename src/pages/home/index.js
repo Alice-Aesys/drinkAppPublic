@@ -1,6 +1,5 @@
 import React from 'react';
 import Welcome from '../../components/welcome';
-import Drinks from '../../components/drinks'
 import Profile from '../../components/profile'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,22 +7,21 @@ import home from '../../utility/images/home.png'
 import { Image } from 'react-native';
 import drink from '../../utility/images/drink.png'
 import search from '../../utility/images/search.png'
+import DrinkRoot from '../drinkRoot';
 
 const Tab = createBottomTabNavigator();
-
 const Home = ({ name,login }) => {
     const sloggati = ()=>{
                 login(false)
     }
     return (
         <NavigationContainer>
-            <Tab.Navigator screenOptions={{headerShown:false}} initialRouteName='welcome' >
-                
-            <Tab.Screen name="Search" component={Drinks} initialParams={{nome: name, sloggati}} options={{
+            <Tab.Navigator screenOptions={{headerShown:false}} initialRouteName='Welcome'>
+            <Tab.Screen name="Search" component={DrinkRoot} options={{
                     tabBarShowLabel: false,
                     tabBarStyle:{
                       backgroundColor: '#F7EFCA',
-                      borderTopColor: '#F7EFCA',
+                      borderTopColor: '#F7EFCA'
                   },
                     tabBarIcon: () => (
                       <Image
@@ -72,7 +70,6 @@ const Home = ({ name,login }) => {
                       />
                     ),
                   }}/>
-                   <Tab.Screen ></Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
     )
