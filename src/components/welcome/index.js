@@ -45,7 +45,7 @@ const style = StyleSheet.create({
         height: 75
     },
     welcome: {
-        paddingTop: 10,
+        marginTop: 10,
         color: '#cc3675',
         fontSize: 30,
         fontFamily: 'SNORTER PERSONAL USE',
@@ -79,13 +79,6 @@ const style = StyleSheet.create({
         borderRadius:5,
         alignItems: 'center',
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 7,
-        },
-        shadowOpacity: 0.41,
-        shadowRadius: 9.11,
-        
         elevation: 14,
     },
     txt: {

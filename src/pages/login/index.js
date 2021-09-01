@@ -80,7 +80,7 @@ const style = StyleSheet.create({
   input: {
     fontSize: 18,
     backgroundColor: 'white',
-    fontFamily: 'LazyStudent-Regular',
+    fontFamily: 'SNORTER PERSONAL USE',
     borderRadius: 20
   },
   container_button: {
@@ -97,7 +97,7 @@ const style = StyleSheet.create({
   button_text: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'LazyStudent-Regular',
+    fontFamily: 'SNORTER PERSONAL USE',
     alignSelf: 'center'
   }
 })

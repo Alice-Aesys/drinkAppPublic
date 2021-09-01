@@ -19,7 +19,7 @@ const Home = ({ name,login }) => {
         <NavigationContainer>
             <Tab.Navigator screenOptions={{headerShown:false}} initialRouteName='welcome' >
                 
-            <Tab.Screen name="Search" component={Drinks} options={{
+            <Tab.Screen name="Search" component={Drinks} initialParams={{nome: name, sloggati}} options={{
                     tabBarShowLabel: false,
                     tabBarStyle:{
                       backgroundColor: '#F7EFCA',
@@ -37,7 +37,7 @@ const Home = ({ name,login }) => {
                   }}/>
 
 
-                <Tab.Screen name="welcome" component={Welcome} initialParams={{nome: name, sloggati}}
+                <Tab.Screen name="Welcome" component={Welcome} initialParams={{nome: name, sloggati}}
                 options={{
                     tabBarShowLabel: false,
                     tabBarStyle:{
@@ -72,7 +72,7 @@ const Home = ({ name,login }) => {
                       />
                     ),
                   }}/>
-                   
+                   <Tab.Screen ></Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
     )
