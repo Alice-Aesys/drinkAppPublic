@@ -24,7 +24,7 @@ useEffect(()=>{
                 {result.map((elem, index) => {
                     return (
                         <View key={index} style={style.single_card}>
-                            <TouchableOpacity onPress={()=>navigation.navigate('ciao2')}>
+                            <TouchableOpacity onPress={()=>navigation.navigate('Detail', {id:elem.idDrink})}>
                             <Image source={{uri: elem.strDrinkThumb}} style={style.img}></Image>
                             <Text style={style.txt} ellipsizeMode='tail' numberOfLines={2}>{elem.strDrink}</Text>
                             </TouchableOpacity>
