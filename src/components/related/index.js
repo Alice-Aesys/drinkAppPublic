@@ -1,30 +1,22 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { randomDrinks } from '../../utility/api/api';
-import logo from '../../utility/images/logo.png'
+import React, { useEffect, useState } from 'react'
+import { searchByIngredient } from '../../utility/api/api'
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-const ShowDrinks = ({navigation}) => {
-const [result, setResult] = useState([])
 
-useEffect(()=>{
-    randomDrinks().then(res => setResult(res.data.drinks))
-}, [])
+const Related = ({name}) => {
+    const [drinks, setDrinks] = useState([])
+    const navigation = useNavigation();
 
-if(result.length>99){
-    result.length=99
-}
-
+    useEffect(()=>{
+        searchByIngredient(name).then(res=>res.data!==""?setDrinks(res.data.drinks):null)
+    },[name])
+    
     return (
-        <ScrollView style={style.container}>
-            <View style={style.justify}>
-            <Image source={logo} style={style.logo}></Image>
-            <Text style={style.title}>Cocktails</Text>
-            <View style={style.container_cards}>
-            
-
-                {result.map((elem, index) => {
+        <ScrollView>
+            <Text style={style.title}>Related to {name}</Text>
+        <View style={style.container}>
+             {drinks.map((elem, index) => {
                     return (
                         <View key={index} style={style.single_card}>
                             <TouchableOpacity onPress={()=>navigation.navigate('Detail', {id:elem.idDrink})}>
@@ -34,37 +26,22 @@ if(result.length>99){
                         </View>
                     )
                 })}
-            </View>
-            </View>
+        </View>
         </ScrollView>
     )
-
 }
-const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#F7EFCA', 
-    },
-    justify:{
-        display: 'flex',
-        alignItems:'center',
-        marginTop: 20
 
-    },
-    logo: {
-        width: 75,
-        height: 75
-    },
+const style = StyleSheet.create ({
     title:{
-        paddingTop: 10,
+        marginTop: 10,
         color: '#cc3675',
-        fontSize: 30,
+        fontSize: 40,
         fontFamily: 'SNORTER PERSONAL USE',
-        fontWeight: "normal"
+        fontWeight: "normal",
+        alignSelf:'center',
+        textAlign: 'center'
     },
-    container_cards:{
+    container:{
         marginTop:20,
         display:'flex',
         flexDirection:'row',
@@ -95,5 +72,4 @@ const style = StyleSheet.create({
         fontFamily: 'Ignotum'
     }
 })
-
-export default ShowDrinks;
+export default Related;
