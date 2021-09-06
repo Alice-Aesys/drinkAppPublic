@@ -81,7 +81,8 @@ const style = StyleSheet.create({
     fontSize: 18,
     backgroundColor: 'white',
     fontFamily: 'SNORTER PERSONAL USE',
-    borderRadius: 20
+    borderRadius: 20,
+    paddingLeft: 20
   },
   container_button: {
     paddingTop: 20

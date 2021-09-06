@@ -4,27 +4,38 @@ import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { randomDrinks } from '../../utility/api/api';
 import logo from '../../utility/images/logo.png'
+import SearchBar from '../searchBar';
 
 const ShowDrinks = ({navigation}) => {
 const [result, setResult] = useState([])
+const [search, setSearch] = useState([])
 
 useEffect(()=>{
     randomDrinks().then(res => setResult(res.data.drinks))
 }, [])
 
-if(result.length>99){
-    result.length=99
+let cerca = [];
+function controlla (){
+    if(search!==null){
+        cerca.push(search)
+    } else {
+        cerca.push(result)
+    }
 }
+
+
+
 
     return (
         <ScrollView style={style.container}>
             <View style={style.justify}>
             <Image source={logo} style={style.logo}></Image>
             <Text style={style.title}>Cocktails</Text>
+            <SearchBar val={setSearch}/>
             <View style={style.container_cards}>
-            
-
-                {result.map((elem, index) => {
+                
+                {controlla()}
+                {cerca[0].map((elem, index) => {
                     return (
                         <View key={index} style={style.single_card}>
                             <TouchableOpacity onPress={()=>navigation.navigate('Detail', {id:elem.idDrink})}>
