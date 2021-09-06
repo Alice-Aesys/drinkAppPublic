@@ -7,19 +7,21 @@ import logo from '../../utility/images/logo.png'
 import SearchBar from '../searchBar';
 
 const ShowDrinks = ({navigation}) => {
-const [result, setResult] = useState([])
+const [randomDrink, setrandomDrink] = useState([])
 const [search, setSearch] = useState([])
 
 useEffect(()=>{
-    randomDrinks().then(res => setResult(res.data.drinks))
+    randomDrinks().then(res => setrandomDrink(res.data.drinks))
 }, [])
 
-let cerca = [];
-function controlla (){
+let result = [];
+
+
+function pushResult (){
     if(search!==null){
-        cerca.push(search)
+        result.push(search)
     } else {
-        cerca.push(result)
+        result.push(randomDrink)
     }
 }
 
@@ -34,8 +36,8 @@ function controlla (){
             <SearchBar val={setSearch}/>
             <View style={style.container_cards}>
                 
-                {controlla()}
-                {cerca[0].map((elem, index) => {
+                {pushResult()}
+                {result[0].map((elem, index) => {
                     return (
                         <View key={index} style={style.single_card}>
                             <TouchableOpacity onPress={()=>navigation.navigate('Detail', {id:elem.idDrink})}>
