@@ -54,7 +54,7 @@ const Home = ({ name,login }) => {
                   }}/>
 
 
-                <Tab.Screen name="Profile" component={Profile} options={{
+                <Tab.Screen name="Profile" component={Profile} initialParams={{nome: name, sloggati}} options={{
                     tabBarShowLabel: false,
                     tabBarStyle:{
                       backgroundColor: '#F7EFCA',

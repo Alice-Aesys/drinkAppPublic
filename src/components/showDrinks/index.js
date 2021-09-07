@@ -16,7 +16,6 @@ useEffect(()=>{
 
 let result = [];
 
-
 function pushResult (){
     if(search!==null){
         result.push(search)
@@ -25,14 +24,12 @@ function pushResult (){
     }
 }
 
-
-
-
     return (
         <ScrollView style={style.container}>
             <View style={style.justify}>
             <Image source={logo} style={style.logo}></Image>
             <Text style={style.title}>Cocktails</Text>
+            <View style={style.line} />
             <SearchBar val={setSearch}/>
             <View style={style.container_cards}>
                 
@@ -77,8 +74,16 @@ const style = StyleSheet.create({
         fontFamily: 'SNORTER PERSONAL USE',
         fontWeight: "normal"
     },
+    line: {
+        width: '70%',
+        height: 30,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(204, 54, 117, 0.2)',
+        marginBottom: '7%',
+        alignSelf: 'center'
+    },
     container_cards:{
-        marginTop:20,
+        marginTop:40,
         display:'flex',
         flexDirection:'row',
         flexWrap:'wrap',
