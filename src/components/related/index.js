@@ -22,7 +22,7 @@ const Related = ({ name }) => {
                         <View key={index} style={style.single_card}>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate('Detail', { id: elem.idDrink }),
-                                    refs.current?.scrollTo({
+                                    refs.current?.scrollTo({ //dovrebbe far risalire alla ref sull'onPress ma non funge
                                         y: 0,
                                         x: 0,
                                         animated : true,

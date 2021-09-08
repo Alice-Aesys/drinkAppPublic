@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, Image, View, Button } from 'react-native'
 import { drinkDetail } from '../../utility/api/api'
 import BackArrow from '../../utility/images/back.png'
 import Related from '../related'
+import heart from '../../utility/images/heart.png'
+import { GlobalContext } from '../../pages/home';
+
 
 function ShowDetail({ navigation, route }) {
     const { id } = route.params
     const [drink, setDrink] = useState([])
+    const {add, setAdd} = useContext(GlobalContext)
+
 
     let ingredients = []
     let quantity = []
@@ -23,7 +28,7 @@ function ShowDetail({ navigation, route }) {
 
     useEffect(() => {
         drinkDetail(id).then(res => setDrink(res.data.drinks[0]))
-    },[id])
+    }, [id])
 
 
 
@@ -41,6 +46,7 @@ function ShowDetail({ navigation, route }) {
                 <View style={style.container_txts}>
                     <Text style={style.alc}>{drink.strAlcoholic}</Text>
                     <Text style={style.glassType}>{drink.strGlass}</Text>
+                    <TouchableOpacity onPress={() => (setAdd([...add, drink]))} style={style.fav}><Image source={heart} style={style.fav_heart} /><Text style={style.favTxt}>Add To Fav</Text></TouchableOpacity>
                 </View>
             </View>
 
@@ -48,22 +54,22 @@ function ShowDetail({ navigation, route }) {
             <View style={style.ingredients_container}>
                 <View style={style.ingr}>
                     <Text style={style.det}>Name</Text>
-                {makePush('strIngredient', ingredients)}
-                {(ingredients?.map((elem, index) => { return <Text key={index} style={style.ingredient}>{elem}</Text> }))}
+                    {makePush('strIngredient', ingredients)}
+                    {(ingredients?.map((elem, index) => { return <Text key={index} style={style.ingredient}>{elem}</Text> }))}
                 </View>
                 <View style={style.quant}>
                     <Text style={style.det}>Quantity</Text>
-                {makePush('strMeasure', quantity)}
-                {(quantity?.map((elem, index) => { return <Text key={index} style={style.ingredient}>{elem}</Text> }))}
+                    {makePush('strMeasure', quantity)}
+                    {(quantity?.map((elem, index) => { return <Text key={index} style={style.ingredient}>{elem}</Text> }))}
                 </View>
             </View>
-            
+
             <Text style={style.ingredients_title}>Instructions:</Text>
             <Text style={style.ingredient}>{drink.strInstructions}</Text>
 
-        <View style={style.line}/>
+            <View style={style.line} />
 
-        <Related name={drink.strIngredient1}></Related>
+            <Related name={drink.strIngredient1}></Related>
         </ScrollView>
     )
 
@@ -119,28 +125,44 @@ const style = StyleSheet.create({
         fontFamily: 'Ignotum',
         fontSize: 20
     },
-    ingredients_title:{
+    fav: {
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    fav_heart: {
+        height: 22,
+        width: 22,
+        marginRight: 5,
+        marginTop: 2
+    },
+    favTxt: {
+        margin: 2,
+        fontFamily: 'Ignotum',
+        fontSize: 20
+    },
+    ingredients_title: {
         color: '#cc3675',
         fontSize: 30,
         fontFamily: 'SNORTER PERSONAL USE',
         fontWeight: "normal",
         marginBottom: 5
     },
-    ingredients_container:{
+    ingredients_container: {
         display: 'flex',
-        flexDirection:'row',
+        flexDirection: 'row',
         marginBottom: 5
     },
-    ingr:{
+    ingr: {
         marginRight: 10
     },
-    det:{
+    det: {
         color: '#cc3675',
         fontSize: 25,
         fontFamily: 'SNORTER PERSONAL USE',
         fontWeight: "normal",
     },
-    ingredient:{
+    ingredient: {
         fontFamily: 'Ignotum',
         fontSize: 18
     },
@@ -152,7 +174,7 @@ const style = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    
+
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
@@ -6,9 +6,13 @@ import { randomDrinks } from '../../utility/api/api';
 import logo from '../../utility/images/logo.png'
 import SearchBar from '../searchBar';
 
+
+
+
 const ShowDrinks = ({navigation}) => {
 const [randomDrink, setrandomDrink] = useState([])
 const [search, setSearch] = useState([])
+
 
 useEffect(()=>{
     randomDrinks().then(res => setrandomDrink(res.data.drinks))

@@ -59,7 +59,7 @@ const style = StyleSheet.create({
     },
     logout_container: {
         position: 'absolute',
-        left: 330,
+        left: '89%',
         top: 16
     },
     line: {
