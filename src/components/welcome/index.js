@@ -1,19 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
-import logo from '../../utility/images/logo.png'
+import Line from '../../utility/component/line';
+import Title from '../../utility/component/title';
 import logout from '../../utility/images/logout.png'
 const Welcome = ({ route }) => {
     const { nome, sloggati } = route.params
     return (
         <ScrollView style={style.container}>
 
-            <View style={style.container_logo_welcome}>
-                <Image source={logo} style={style.img} />
-                <Text style={style.welcome}>Welcome {nome} </Text>
-            </View>
+            <Title text={`Welcome ${nome}`} />
 
-            <View style={style.line} />
+            <Line/>
 
             <TouchableOpacity style={style.logout_container} onPress={() => sloggati()}>
                 <Image source={logout} style={style.logout_css} /></TouchableOpacity>
@@ -35,22 +33,6 @@ const style = StyleSheet.create({
         backgroundColor: '#F7EFCA',
 
     },
-    container_logo_welcome: {
-        position: 'relative',
-        alignItems: 'center',
-        paddingTop: 20,
-    },
-    img: {
-        width: 75,
-        height: 75
-    },
-    welcome: {
-        marginTop: 10,
-        color: '#cc3675',
-        fontSize: 30,
-        fontFamily: 'SNORTER PERSONAL USE',
-        fontWeight: "normal"
-    },
     logout_css: {
         width: 28,
         height: 28,
@@ -62,21 +44,14 @@ const style = StyleSheet.create({
         left: '89%',
         top: 16
     },
-    line: {
-        width: '70%',
-        height: 30,
-        borderBottomWidth: 1,
-        borderBottomColor: 'rgba(204, 54, 117, 0.2)',
-        marginBottom: '10%',
-        alignSelf: 'center'
-    },
     container_info: {
+        marginTop:'10%',
         display: 'flex',
         marginLeft: '10%',
         marginRight: '10%',
-        marginBottom:'10%',
+        marginBottom: '10%',
         backgroundColor: 'pink',
-        borderRadius:5,
+        borderRadius: 5,
         alignItems: 'center',
         shadowColor: "#000",
         elevation: 14,
@@ -87,6 +62,13 @@ const style = StyleSheet.create({
         fontSize: 19,
         fontFamily: 'SNORTER PERSONAL USE',
         marginBottom: 10
+    },
+    welcome:{
+        marginTop: 10,
+        color: '#cc3675',
+        fontSize: 30,
+        fontFamily: 'SNORTER PERSONAL USE',
+        fontWeight: "normal"
     }
 })
 export default Welcome;

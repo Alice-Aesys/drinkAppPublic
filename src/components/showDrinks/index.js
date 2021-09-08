@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React  from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { randomDrinks } from '../../utility/api/api';
-import logo from '../../utility/images/logo.png'
+import ContainerCard from '../../utility/component/containerCard';
+import Line from '../../utility/component/line';
+import Title from '../../utility/component/title';
 import SearchBar from '../searchBar';
 
 
-
-
-const ShowDrinks = ({navigation}) => {
+const ShowDrinks = () => {
 const [randomDrink, setrandomDrink] = useState([])
 const [search, setSearch] = useState([])
 
@@ -19,6 +19,7 @@ useEffect(()=>{
 }, [])
 
 let result = [];
+
 
 function pushResult (){
     if(search!==null){
@@ -30,25 +31,17 @@ function pushResult (){
 
     return (
         <ScrollView style={style.container}>
-            <View style={style.justify}>
-            <Image source={logo} style={style.logo}></Image>
-            <Text style={style.title}>Cocktails</Text>
-            <View style={style.line} />
+            <Title text={'cocktails'}/>
+            <Line/>
             <SearchBar val={setSearch}/>
             <View style={style.container_cards}>
                 
                 {pushResult()}
-                {result[0].map((elem, index) => {
+                {result[0].map((elem) => {
                     return (
-                        <View key={index} style={style.single_card}>
-                            <TouchableOpacity onPress={()=>navigation.navigate('Detail', {id:elem.idDrink})}>
-                            <Image source={{uri: elem.strDrinkThumb}} style={style.img}></Image>
-                            <Text style={style.txt} ellipsizeMode='tail' numberOfLines={2}>{elem.strDrink}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )
-                })}
-            </View>
+                        <ContainerCard elem={elem}/>
+
+                    )})}
             </View>
         </ScrollView>
     )
@@ -92,30 +85,8 @@ const style = StyleSheet.create({
         flexDirection:'row',
         flexWrap:'wrap',
         justifyContent: 'space-around'
-    },
-    single_card:{
-        width:'30%',
-        backgroundColor: 'rgba(204, 54, 117, 0.15)',
-        display:'flex',
-        alignItems: 'center',
-        marginBottom: 20,
-        paddingTop: 10,
-        paddingBottom: 10,
-        borderRadius: 10,
-        elevation: 1.5,
-    },
-    img:{
-        width:80,
-        height:100,
-        marginTop: 5,
-        marginBottom:7,
-        borderRadius: 7
-    },
-    txt:{
-        width: 80,
-        fontSize: 15,
-        fontFamily: 'Ignotum'
     }
+    
 })
 
 export default ShowDrinks;

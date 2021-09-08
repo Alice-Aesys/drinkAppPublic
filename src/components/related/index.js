@@ -3,10 +3,10 @@ import { searchByIngredient } from '../../utility/api/api'
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
+import ContainerCard from '../../utility/component/containerCard';
 
 const Related = ({ name }) => {
     const [drinks, setDrinks] = useState([])
-    const navigation = useNavigation();
     const refs = useRef();
 
     useEffect(() => {
@@ -17,22 +17,8 @@ const Related = ({ name }) => {
         <ScrollView ref={refs} >
             <Text style={style.title}>Related to {name}</Text>
             <View style={style.container}>
-                {drinks.map((elem, index) => {
-                    return (
-                        <View key={index} style={style.single_card}>
-                            <TouchableOpacity onPress={() => {
-                                navigation.navigate('Detail', { id: elem.idDrink }),
-                                    refs.current?.scrollTo({ //dovrebbe far risalire alla ref sull'onPress ma non funge
-                                        y: 0,
-                                        x: 0,
-                                        animated : true,
-                                    })
-                            }}>
-                                <Image source={{ uri: elem.strDrinkThumb }} style={style.img}></Image>
-                                <Text style={style.txt} ellipsizeMode='tail' numberOfLines={2}>{elem.strDrink}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )
+                {drinks.map((elem) => {
+                    return <ContainerCard elem={elem} />
                 })}
             </View>
         </ScrollView>
@@ -49,35 +35,13 @@ const style = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center'
     },
-    container: {
+    container:{
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-around'
-    },
-    single_card: {
-        width: '30%',
-        backgroundColor: 'rgba(204, 54, 117, 0.15)',
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: 20,
-        paddingTop: 10,
-        paddingBottom: 10,
-        borderRadius: 10,
-        elevation: 1.5,
-    },
-    img: {
-        width: 80,
-        height: 100,
-        marginTop: 5,
-        marginBottom: 7,
-        borderRadius: 7
-    },
-    txt: {
-        width: 80,
-        fontSize: 15,
-        fontFamily: 'Ignotum'
     }
+
 })
 export default Related;

@@ -5,6 +5,7 @@ import BackArrow from '../../utility/images/back.png'
 import Related from '../related'
 import heart from '../../utility/images/heart.png'
 import { GlobalContext } from '../../pages/home';
+import Line from '../../utility/component/line'
 
 
 function ShowDetail({ navigation, route }) {
@@ -12,10 +13,8 @@ function ShowDetail({ navigation, route }) {
     const [drink, setDrink] = useState([])
     const {add, setAdd} = useContext(GlobalContext)
 
-
     let ingredients = []
     let quantity = []
-
 
     function makePush(val, array) {
         for (let i = 1; i <= 15; i++) {
@@ -25,12 +24,9 @@ function ShowDetail({ navigation, route }) {
         }
     }
 
-
     useEffect(() => {
         drinkDetail(id).then(res => setDrink(res.data.drinks[0]))
     }, [id])
-
-
 
     return (
         <ScrollView style={style.container}>
@@ -39,6 +35,7 @@ function ShowDetail({ navigation, route }) {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={style.back}><Image source={BackArrow} style={style.backarrow}></Image></TouchableOpacity>
                 <Text style={style.title}>{drink.strDrink}</Text>
             </View>
+            <Line/>
 
 
             <View style={style.container_detail}>
@@ -67,7 +64,7 @@ function ShowDetail({ navigation, route }) {
             <Text style={style.ingredients_title}>Instructions:</Text>
             <Text style={style.ingredient}>{drink.strInstructions}</Text>
 
-            <View style={style.line} />
+            <Line/>
 
             <Related name={drink.strIngredient1}></Related>
         </ScrollView>
@@ -104,16 +101,18 @@ const style = StyleSheet.create({
         marginTop: 12
     },
     container_detail: {
-        marginTop: 15,
+        marginTop: '10%',
         display: 'flex',
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
     },
     img: {
         width: 120,
-        height: 170
+        height: 170,
+        borderRadius: 15
     },
     container_txts: {
+        marginTop: 10,
         marginLeft: 10,
     },
     alc: {
@@ -165,19 +164,6 @@ const style = StyleSheet.create({
     ingredient: {
         fontFamily: 'Ignotum',
         fontSize: 18
-    },
-    line: {
-        width: '70%',
-        height: 30,
-        borderBottomWidth: 1,
-        borderBottomColor: 'rgba(204, 54, 117, 0.2)',
-        alignSelf: 'center'
-    },
-
-
-
-
-
-
+    }
 })
 export default ShowDetail;

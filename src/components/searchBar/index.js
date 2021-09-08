@@ -22,13 +22,15 @@ const SearchBar = ({val}) => {
 const style = StyleSheet.create({
 container:{
     height: 40,
-    marginTop:10,
+    marginTop:'10%',
     display:'flex',
     flexDirection:'row',
     alignItems:'center',
+    alignSelf:'center',
     borderRadius: 20,
     backgroundColor:'white',
-    width: '70%'
+    width: '70%',
+    justifyContent:'center'
 },
 imm:{
     width:25,
