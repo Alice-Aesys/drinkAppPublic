@@ -11,11 +11,13 @@ import Line from '../../utility/component/line'
 function ShowDetail({ navigation, route }) {
     const { id } = route.params
     const [drink, setDrink] = useState([])
-    const {add, setAdd} = useContext(GlobalContext)
-
+    const [favs, setFavs] = useState(false)
+    const { add, setAdd } = useContext(GlobalContext)
+    
     let ingredients = []
     let quantity = []
-
+    
+console.log(add)
     function makePush(val, array) {
         for (let i = 1; i <= 15; i++) {
             if (drink[val + i] !== null) {
@@ -24,10 +26,35 @@ function ShowDetail({ navigation, route }) {
         }
     }
 
+
     useEffect(() => {
         drinkDetail(id).then(res => setDrink(res.data.drinks[0]))
+        
     }, [id])
 
+
+function controlla(){
+    let fav = false 
+    if (drink !== undefined && add !== undefined) {
+        console.log("ciao sono nell' if")
+        const esiste = add.filter(elem=>elem.idDrink==drink.idDrink)
+        if(esiste.length>0){
+            fav = true
+        }
+    }
+    console.log('risultato controlla',fav)
+    return (fav)
+}
+
+
+function deleteItem (val){
+    for( let i=0; i<= add.length; i++){
+        if(val === add[i].idDrink){
+            add.splice(i,1)
+        }
+    }
+}
+   
     return (
         <ScrollView style={style.container}>
 
@@ -35,7 +62,7 @@ function ShowDetail({ navigation, route }) {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={style.back}><Image source={BackArrow} style={style.backarrow}></Image></TouchableOpacity>
                 <Text style={style.title}>{drink.strDrink}</Text>
             </View>
-            <Line/>
+            <Line />
 
 
             <View style={style.container_detail}>
@@ -43,7 +70,16 @@ function ShowDetail({ navigation, route }) {
                 <View style={style.container_txts}>
                     <Text style={style.alc}>{drink.strAlcoholic}</Text>
                     <Text style={style.glassType}>{drink.strGlass}</Text>
-                    <TouchableOpacity onPress={() => (setAdd([...add, drink]))} style={style.fav}><Image source={heart} style={style.fav_heart} /><Text style={style.favTxt}>Add To Fav</Text></TouchableOpacity>
+                    {!controlla()?
+                        <TouchableOpacity onPress={() =>{ 
+                            (setAdd([...add, drink]))
+                            setFavs(false)
+                        }} style={style.fav}><Image source={heart} style={style.fav_heart} /><Text style={style.favTxt}>Add To Fav</Text></TouchableOpacity> :
+                        <TouchableOpacity onPress={() => {
+                            (deleteItem(drink.idDrink))
+                            setFavs(true)
+                        }} style={style.fav}><Image source={heart} style={style.fav_heart} /><Text style={style.favTxt}>Remove from fav</Text></TouchableOpacity>
+                    }
                 </View>
             </View>
 
@@ -64,7 +100,7 @@ function ShowDetail({ navigation, route }) {
             <Text style={style.ingredients_title}>Instructions:</Text>
             <Text style={style.ingredient}>{drink.strInstructions}</Text>
 
-            <Line/>
+            <Line />
 
             <Related name={drink.strIngredient1}></Related>
         </ScrollView>
