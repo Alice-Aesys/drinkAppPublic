@@ -2,10 +2,34 @@ import React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, Text, Image } from 'react-native';
 import Sound from 'react-native-sound';
 import logo from '../../utility/images/logo.png'
+import RNBiometrics from 'react-native-simple-biometrics'
+import ReactNativeBiometrics from 'react-native-biometrics'
+
 
 const Login = ({ login, username }) => {
   const sound = new Sound('../../utility/sound/applause.mp3')
   let name;
+  const can = RNBiometrics.canAuthenticate();
+
+function logWithFinger(){
+  if(can){
+    try{
+      RNBiometrics.requestBioAuth("Double Auth", "Put your finger")
+      let ciao = ReactNativeBiometrics.createKeys('Confirm fingerprint').then((resultObject) => {
+        const { publicKey } = resultObject
+        if(publicKey!= undefined){
+          login(true)
+          username(name)
+        }
+      })
+      return ciao
+    } catch (error){
+      console.log(error)
+    }
+  }
+ 
+}
+
   return (
     <View style={style.container}>
     
@@ -26,10 +50,9 @@ const Login = ({ login, username }) => {
           <TouchableOpacity
             style={style.button}
             onPress={() => {
-              login(true)
-              username(name)
-              sound.play()
-              sound.setVolume(0.9);
+              logWithFinger()
+             
+              
             }}>
             <Text style={style.button_text}>Get drunk</Text>
           </TouchableOpacity>
